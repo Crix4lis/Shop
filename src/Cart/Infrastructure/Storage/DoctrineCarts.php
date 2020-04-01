@@ -8,9 +8,12 @@ use App\Shop\Cart\Domain\Event\CartRemoved;
 use App\Shop\Cart\Domain\Model\Cart;
 use App\Shop\Cart\Domain\Model\CartsInterface;
 use App\Shop\Common\Event\PersistableDoctrineEventTrait;
+use App\Shop\Common\Exception\ConflictException;
 use App\Shop\Common\Exception\EntityNotFoundException;
 use App\Shop\Common\Exception\StorageException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Driver\PDOException;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -27,6 +30,7 @@ class DoctrineCarts extends ServiceEntityRepository implements CartsInterface
      * @param Cart $cart
      *
      * @throws StorageException
+     * @throws ConflictException
      */
     public function save(Cart $cart): void
     {
@@ -38,6 +42,8 @@ class DoctrineCarts extends ServiceEntityRepository implements CartsInterface
             $em->flush();
         } catch (ORMException $e) {
             throw new StorageException();
+        } catch (UniqueConstraintViolationException $e) {
+            throw new ConflictException();
         }
     }
 

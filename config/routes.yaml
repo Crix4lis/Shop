@@ -24,31 +24,31 @@ catalogue_product_edit:
     methods: PATCH
 
 cart_index:
-    path: /cart
+    path: /shop/carts
     controller: App\Shop\Cart\UI\Controller\CartController::getList
     methods: GET
 
 cart_get:
-  path: /cart/{id}
+  path: /shop/carts/{id}
   controller: App\Shop\Cart\UI\Controller\CartController::getSingle
   methods: GET
 
 cart_create:
-  path: /cart
+  path: /shop/carts
   controller: App\Shop\Cart\UI\Controller\CartController::create
   methods: POST
 
 cart_product_add:
-    path: /cart/{id}/products
+    path: /shop/carts/{id}/products
     controller: App\Shop\Cart\UI\Controller\CartController::addProduct
     methods: PATCH
 
 cart_product_get:
-    path: /cart/{id}/products
+    path: /shop/carts/{id}/products
     controller: App\Shop\Cart\UI\Controller\CartController::getProducts
     methods: GET
 
 cart_product_remove:
-    path: /cart/{id}/products/{productId}
+    path: /shop/carts/{id}/products/{productId}
     controller: App\Shop\Cart\UI\Controller\CartController::removeProduct
     methods: DELETE

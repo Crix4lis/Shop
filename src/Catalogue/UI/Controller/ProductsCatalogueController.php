@@ -9,6 +9,7 @@ use App\Shop\Catalogue\Application\Command\RemoveProductCommand;
 use App\Shop\Catalogue\Application\Command\UpdateProductDataCommand;
 use App\Shop\Catalogue\Application\Query\GetManyProducts;
 use App\Shop\Catalogue\Application\Query\GetProduct;
+use App\Shop\Common\Exception\ConflictException;
 use App\Shop\Common\Exception\EntityNotFoundException;
 use App\Shop\Common\Exception\StorageException;
 use App\Shop\Common\Parser\JsonParser;
@@ -110,6 +111,8 @@ class ProductsCatalogueController extends AbstractController
             $commandBus->handle(new UpdateProductDataCommand($id, $newName, $newPrice));
         } catch (StorageException $e) {
             return new JsonResponse(['message' => 'Internal server error'], 500);
+        } catch (ConflictException $e) {
+            return new JsonResponse(['message' => 'Conflict'], 409);
         }
 
         return new JsonResponse(['message' => 'success'], 200);

@@ -99,12 +99,12 @@ class CartController extends AbstractController
         try {
             $commandBus->handle(new RemoveProductFromCartCommand($id, $productId));
         } catch (EntityNotFoundException $e) {
-            return new JsonResponse([sprintf('Cart with uuid %s does not exist', $id)], 404);
+            return new JsonResponse(['message' => sprintf('Cart with uuid %s does not exist', $id)], 404);
         } catch (StorageException $e) {
             return new JsonResponse(['message' => 'Internal server error'], 500);
         }
 
-        return new JsonResponse(['success'], 200);
+        return new JsonResponse(['message' => 'success'], 200);
     }
 
     public function getProducts(string $id, Request $request, GetCartProducts $query)
@@ -138,6 +138,10 @@ class CartController extends AbstractController
         }
 
         if (false === is_array($data['products'])) {
+            return false;
+        }
+
+        if (empty($data['products'])) {
             return false;
         }
 

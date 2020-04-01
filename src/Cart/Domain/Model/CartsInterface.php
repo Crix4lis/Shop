@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shop\Cart\Domain\Model;
 
+use App\Shop\Common\Exception\ConflictException;
 use App\Shop\Common\Exception\EntityNotFoundException;
 use App\Shop\Common\Exception\StorageException;
 
@@ -13,6 +14,7 @@ interface CartsInterface
      * @param Cart $cart
      *
      * @throws StorageException
+     * @throws ConflictException
      */
     public function save(Cart $cart): void;
 

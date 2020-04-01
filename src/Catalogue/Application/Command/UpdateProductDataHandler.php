@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Shop\Catalogue\Application\Command;
 
 use App\Shop\Catalogue\Infrastructure\Storage\DoctrineProducts;
+use App\Shop\Common\Exception\ConflictException;
 use App\Shop\Common\Exception\StorageException;
 use App\Shop\Common\Price\Price;
 
@@ -21,6 +22,7 @@ class UpdateProductDataHandler
      * @param UpdateProductDataCommand $command
      *
      * @throws StorageException
+     * @throws ConflictException
      */
     public function handle(UpdateProductDataCommand $command): void
     {

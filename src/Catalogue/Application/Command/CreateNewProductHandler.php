@@ -6,6 +6,7 @@ namespace App\Shop\Catalogue\Application\Command;
 
 use App\Shop\Catalogue\Domain\Model\Product;
 use App\Shop\Catalogue\Domain\Model\ProductsInterface;
+use App\Shop\Common\Exception\ConflictException;
 use App\Shop\Common\Exception\StorageException;
 use App\Shop\Common\Price\Price;
 
@@ -22,6 +23,7 @@ class CreateNewProductHandler
      * @param CreateNewProductCommand $command
      *
      * @throws StorageException
+     * @throws ConflictException
      */
     public function handle(CreateNewProductCommand $command): void
     {

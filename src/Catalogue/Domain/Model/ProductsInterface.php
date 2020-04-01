@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shop\Catalogue\Domain\Model;
 
+use App\Shop\Common\Exception\ConflictException;
 use App\Shop\Common\Exception\EntityNotFoundException;
 use App\Shop\Common\Exception\StorageException;
 
@@ -13,6 +14,7 @@ interface ProductsInterface
      * @param Product $product
      *
      * @throws StorageException
+     * @throws ConflictException
      */
     public function save(Product $product): void;
 

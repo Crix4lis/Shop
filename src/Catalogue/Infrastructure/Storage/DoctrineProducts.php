@@ -8,9 +8,12 @@ use App\Shop\Catalogue\Domain\Event\ProductRemoved;
 use App\Shop\Catalogue\Domain\Model\Product;
 use App\Shop\Catalogue\Domain\Model\ProductsInterface;
 use App\Shop\Common\Event\PersistableDoctrineEventTrait;
+use App\Shop\Common\Exception\ConflictException;
 use App\Shop\Common\Exception\EntityNotFoundException;
 use App\Shop\Common\Exception\StorageException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Driver\PDOException;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -27,6 +30,7 @@ class DoctrineProducts extends ServiceEntityRepository implements ProductsInterf
      * @param Product $product
      *
      * @throws StorageException
+     * @throws ConflictException
      */
     public function save(Product $product): void
     {
@@ -37,6 +41,8 @@ class DoctrineProducts extends ServiceEntityRepository implements ProductsInterf
             $em->flush();
         } catch (ORMException $e) {
             throw new StorageException();
+        } catch (UniqueConstraintViolationException $e) {
+            throw new ConflictException();
         }
     }
 
