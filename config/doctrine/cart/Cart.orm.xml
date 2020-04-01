@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Shop\Cart\Domain\Model\Cart"
+            table="cart"
+            repository-class="App\Shop\Cart\Infrastructure\Storage\DoctrineCarts" >
+
+        <id name="uuid" type="string" column="uuid">
+            <generator strategy="NONE"/>
+        </id>
+        <many-to-many field="products" target-entity="App\Shop\Cart\Domain\Model\Product" >
+            <cascade>
+                <cascade-all/>
+            </cascade>
+            <join-table name="cart_products">
+                <join-columns>
+                    <join-column name="cart_uuid" referenced-column-name="uuid" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="product_uuid" referenced-column-name="uuid" unique="true" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

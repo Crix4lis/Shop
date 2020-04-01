@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Shop\Common\Event\BaseDomainEvent"
+            table="event_store"
+            repository-class="App\Shop\Common\Event\DoctrineEventStore" >
+<!--        -->
+<!--            inheritance-type="SINGLE_TABLE">-->
+<!--        <discriminator-column name="inheritance" type="string" />-->
+<!--        <discriminator-map>-->
+<!--            <discriminator-mapping value="CartRemoved" class="App\Shop\Cart\Domain\Event\CartRemoved" />-->
+<!--            <discriminator-mapping value="NewCartCreated" class="App\Shop\Cart\Domain\Event\NewCartCreated" />-->
+<!--            <discriminator-mapping value="ProductAddedToCart" class="App\Shop\Cart\Domain\Event\ProductAddedToCart" />-->
+<!--            <discriminator-mapping value="ProductRemovedFromCart" class="App\Shop\Cart\Domain\Event\ProductRemovedFromCart" />-->
+<!--            <discriminator-mapping value="NewProductCreated" class="App\Shop\Catalogue\Domain\Event\NewProductCreated" />-->
+<!--            <discriminator-mapping value="ProductNameChanged" class="App\Shop\Catalogue\Domain\Event\ProductNameChanged" />-->
+<!--            <discriminator-mapping value="ProductPriceChanged" class="App\Shop\Catalogue\Domain\Event\ProductPriceChanged" />-->
+<!--            <discriminator-mapping value="ProductRemoved" class="App\Shop\Catalogue\Domain\Event\ProductRemoved" />-->
+<!--        </discriminator-map>-->
+
+        <id name="eventId" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="eventBody" type="string" column="event_body" nullable="false"/>
+        <field name="occurredOn" type="datetime_immutable" column="occurred_on" nullable="false"/>
+        <field name="typeName" type="string" column="event_type" nullable="false"/>
+    </entity>
+
+</doctrine-mapping>

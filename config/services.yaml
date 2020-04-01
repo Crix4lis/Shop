@@ -1,0 +1,77 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\Shop\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Shop\Cart\UI\Controller\:
+        resource: '../src/Cart/UI/Controller/*'
+        tags: ['controller.service_arguments']
+
+    App\Shop\Catalogue\UI\Controller\:
+        resource: '../src/Catalogue/UI/Controller/*'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    App\Shop\Cart\Infrastructure\Query\GetCartQuery:
+        $parser: '@App\Shop\Cart\Infrastructure\Parser\CartModelParser'
+
+    App\Shop\Cart\Infrastructure\Query\GetAllCartsQuery:
+        $parser: '@App\Shop\Cart\Infrastructure\Parser\CartModelParser'
+
+    App\Shop\Cart\Infrastructure\Query\GetCartProductsQuery:
+        $productDataParser: '@App\Shop\Cart\Infrastructure\Parser\ProductDataParser'
+
+    App\Shop\Catalogue\Infrastructure\Query\GetProductQuery:
+        $parser: '@App\Shop\Catalogue\Infrastructure\Parser\ProductModelParser'
+
+    App\Shop\Catalogue\Infrastructure\Query\GetManyProductsQuery:
+        $parser: '@App\Shop\Catalogue\Infrastructure\Parser\ProductModelParser'
+
+    ## handlers
+    App\Shop\Cart\Application\Command\CreateNewCartHandler:
+        class: App\Shop\Cart\Application\Command\CreateNewCartHandler
+        tags:
+            - { name: tactician.handler, typehints: true }
+
+    App\Shop\Cart\Application\Command\AddProductsToCartHandler:
+        class: App\Shop\Cart\Application\Command\AddProductsToCartHandler
+        tags:
+            - { name: tactician.handler, typehints: true }
+
+    App\Shop\Cart\Application\Command\RemoveProductFromCartHandler:
+        class: App\Shop\Cart\Application\Command\RemoveProductFromCartHandler
+        tags:
+            - { name: tactician.handler, typehints: true }
+
+    App\Shop\Catalogue\Application\Command\CreateNewProductHandler:
+        class: App\Shop\Catalogue\Application\Command\CreateNewProductHandler
+        tags:
+            - { name: tactician.handler, typehints: true }
+
+    App\Shop\Catalogue\Application\Command\RemoveProductHandler:
+        class: App\Shop\Catalogue\Application\Command\RemoveProductHandler
+        tags:
+            - { name: tactician.handler, typehints: true }
+
+    App\Shop\Catalogue\Application\Command\UpdateProductDataHandler:
+        class: App\Shop\Catalogue\Application\Command\UpdateProductDataHandler
+        tags:
+            - { name: tactician.handler, typehints: true }

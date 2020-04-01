@@ -1,0 +1,54 @@
+catalogue_index:
+    path: /catalogue/products
+    controller: App\Shop\Catalogue\UI\Controller\ProductsCatalogueController::getList
+    methods: GET
+
+catalogue_product_create:
+  path: /catalogue/products
+  controller: App\Shop\Catalogue\UI\Controller\ProductsCatalogueController::create
+  methods: POST
+
+catalogue_product_get:
+    path: /catalogue/products/{id}
+    controller: App\Shop\Catalogue\UI\Controller\ProductsCatalogueController::getSingle
+    methods: GET
+
+catalogue_product_delete:
+    path: /catalogue/products/{id}
+    controller: App\Shop\Catalogue\UI\Controller\ProductsCatalogueController::delete
+    methods: DELETE
+
+catalogue_product_edit:
+    path: /catalogue/products/{id}
+    controller: App\Shop\Catalogue\UI\Controller\ProductsCatalogueController::edit
+    methods: PATCH
+
+cart_index:
+    path: /cart
+    controller: App\Shop\Cart\UI\Controller\CartController::getList
+    methods: GET
+
+cart_get:
+  path: /cart/{id}
+  controller: App\Shop\Cart\UI\Controller\CartController::getSingle
+  methods: GET
+
+cart_create:
+  path: /cart
+  controller: App\Shop\Cart\UI\Controller\CartController::create
+  methods: POST
+
+cart_product_add:
+    path: /cart/{id}/products
+    controller: App\Shop\Cart\UI\Controller\CartController::addProduct
+    methods: PATCH
+
+cart_product_get:
+    path: /cart/{id}/products
+    controller: App\Shop\Cart\UI\Controller\CartController::getProducts
+    methods: GET
+
+cart_product_remove:
+    path: /cart/{id}/products/{productId}
+    controller: App\Shop\Cart\UI\Controller\CartController::removeProduct
+    methods: DELETE
