@@ -19,7 +19,7 @@
 
 ## Not first time
 1. Go to repository root directory
-1. Build and run containers: `docker-composer up -d`
+1. Run containers: `docker-composer up -d`
 1. Get into cli docker container: `docker-composer exec cli bash`
 1. Start symfony server: `symfony server:start -d`
 1. Play with API with some kind of a Client, address is: `http://127.0.0.1:8000`
