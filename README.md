@@ -13,8 +13,9 @@
 1. Build and run containers: `docker-composer up -d`
 1. Get into cli docker container: `docker-composer exec cli bash`
 1. Install dependencies: `composer install`
-1. Start symfony server: `symfony server:start -d`
+1. Generate schema: `php bin/console doctrine:schema:create`
 1. Run unit tests: `bin/console/phpunit`
+1. Start symfony server: `symfony server:start -d`
 1. Play with API with some kind of a Client, address is: `http://127.0.0.1:8000`
 
 ## Not first time
